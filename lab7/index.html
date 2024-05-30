@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Visualization Lab</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+      font-family: 'Arial', sans-serif;
+      background-color: #e0e0e0; /* Light gray background color */
+      color: #333; /* Dark text color for better readability */
+    }
+    .sidebar {
+      width: 280px;
+      height: 100%;
+      position: fixed;
+      background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
+      color: white;
+    }
+    .sidebar .nav-link {
+      color: white;
+      transition: background 0.3s;
+    }
+    .sidebar .nav-link:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .sidebar .dropdown-menu {
+      background-color: #4d557a;
+    }
+    .sidebar .dropdown-menu .dropdown-item {
+      color: white;
+    }
+    .main-content {
+      margin-left: 280px;
+      flex-grow: 1;
+      padding: 20px;
+      background: #f8f9fa;
+    }
+    .navbar {
+      background: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: #4e596d;
+    }
+    .navbar-nav .nav-link {
+      color: #555;
+    }
+    .navbar-nav .nav-link:hover {
+      color: #2575fc;
+    }
+    .chart-container {
+      width: 33%;
+      display: inline-block;
+      vertical-align: top;
+      padding: 10px;
+    }
+    canvas {
+      width: 100%;
+      height: 250px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    .navbar-nav .dropdown-menu {
+      border-radius: 8px;
+      border: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="d-flex flex-column flex-shrink-0 p-3 sidebar">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <i class="fas fa-chart-line fa-2x me-2"></i>
+      <span class="fs-4">HCI FINAL</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="index.html" class="nav-link active" aria-current="page">
+          <i class="fas fa-home me-2"></i>
+          HOME
+        </a>
+      </li>
+      <li>
+        <a href="login.html" class="nav-link text-white">
+          <i class="fas fa-tachometer-alt me-2"></i>
+          LOG IN
+        </a>
+      </li>
+      <li>
+        <a href="image.html" class="nav-link text-white">
+          <i class="fas fa-table me-2"></i>
+          IMAGE
+        </a>
+      </li>
+      <li>
+        <a href="table.html" class="nav-link text-white">
+          <i class="fas fa-box me-2"></i>
+          TABLE
+        </a>
+      </li>
+    <hr>
+    <div class="dropdown">
+      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="andrie1.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
+        <strong>Settings</strong>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+        <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="contact.html">Contact</a></li>
+        <li><a class="dropdown-item" href="#">Sign out</a></li>
+      </ul>
+    </div>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li>
+        <a href="#" class="nav-link text-white" onclick="showChart('bar')">
+          <i class="fas fa-chart-bar me-2"></i>
+          Bar Chart
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white" onclick="showChart('line')">
+          <i class="fas fa-chart-line me-2"></i>
+          Line Chart
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white" onclick="showChart('pie')">
+          <i class="fas fa-chart-pie me-2"></i>
+          Pie Chart
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="#">ESPINO.  </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#"></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"></a>
+          </li>
+          
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" onclick="showChart('bar')">Bar Chart</a></li>
+              <li><a class="dropdown-item" onclick="showChart('line')">Line Chart</a></li>
+              <li><a class="dropdown-item" onclick="showChart('pie')">Pie Chart</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        
+        <form class="form-inline ms-auto">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search here" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+    
+    <div class="container mt-5">
+      <div class="row justify-content-center mb-4">
+        <div class="chart-container">
+          <canvas id="barChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="lineChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="pieChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item disabled">
+        <a class="page-link" href="image.html" tabindex="-1" aria-disabled="true">Previous</a>
+      </li>
+      <li class="page-item"><a class="page-link" href="login.html">1</a></li>
+      <li class="page-item"><a class="page-link" href="image.html">2</a></li>
+      <li class="page-item"><a class="page-link" href="table.html">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="login.html">Next</a>
+      </li>
+    </ul>
+  </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+  <script>
+    function showBarChart() {
+      const ctx = document.getElementById('barChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+          datasets: [{
+            label: '# of Votes',
+            data: [100, 59, 80, 81, 56, 55, 68, 23, 10, 100, 69, 90],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+    function showLineChart() {
+      const ctx = document.getElementById('lineChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+          datasets: [{
+            label: 'Sales',
+            data: [100, 59, 80, 81, 56, 55, 68, 23, 10, 100, 69, 90],
+            borderColor: 'rgba(75, 192, 192, 1)',
+            tension: 0.1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+    function showPieChart() {
+      const ctx = document.getElementById('pieChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+          datasets: [{
+            label: 'Population',
+            data: [100, 59, 80, 81, 56, 55, 68, 23, 10, 100, 69, 90],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)'
+            ],
+            borderWidth: 1
+          }]
+        }
+      });
+    }
+
+    window.onload = function() {
+      showBarChart();
+      showLineChart();
+      showPieChart();
+    }; 
+  </script>
+</body>
+</html>
+

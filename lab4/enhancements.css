@@ -1,0 +1,72 @@
+:root {
+  --main-color: #f00e0e;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.hover-button {
+  padding: 50px 50px;
+  border: solid;
+  background-color: var(--main-color);
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.hover-button:hover {
+  background-color: DodgerBlue;
+}
+
+.animation-box {
+  align-items: center;
+  color: white;
+  width: 200px;
+  height: 200px;
+  background-color: red;
+  position: relative;
+  animation-name: exampleBox; /* Different animation name */
+  animation-duration: 8s;
+  animation-iteration-count: 10;
+  border-style: solid;
+  border-color: black;
+}
+
+.animation-kahon {
+  align-items: center;
+  color: white;
+  width: 200px;
+  height: 200px;
+  background-color: red;
+  position: relative;
+  animation-name: exampleKahon; /* Different animation name */
+  animation-duration: 5s;
+  animation-iteration-count: 10;
+  border-style: solid;
+  border-color: black;
+}
+
+@keyframes exampleBox {
+  0%   {background-color: red; left: 0px; top: 0px;}
+  25%  {background-color: yellow; left: 200px; top: 0px;}
+  50%  {background-color: blue; left: 200px; top: 200px;}
+  75%  {background-color: green; left: 0px; top: 200px;}
+  100% {background-color: red; left: 0px; top: 0px;}
+}
+
+@keyframes exampleKahon {
+  0%   {background-color: red; left: 0px; top: 0px;}
+  25%  {background-color: blue; left: 0px; top: 200px;}
+  50%  {background-color: yellow; left: 200px; top: 200px;}
+  75%  {background-color: green; left: 200px; top: 0px;}
+  100% {background-color: red; left: 0px; top: 0px;}
+from {
+transform: translateX(0) rotate(0deg);
+to {
+transform: translateX(100px) rotate(360deg);
+ }
+}
